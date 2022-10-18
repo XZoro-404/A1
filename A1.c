@@ -2,7 +2,8 @@
 #include <stdlib.h>
 
 int * getChildren(int parent) {
-    FILE *in_file = fopen("testNum", "r"); // read only
+    parent = ("/proc/%i/task/%i/children", parent);
+    FILE *in_file = fopen("/proc/%i/task/%i/children, parent", "r"); // read only
     int number;
     int arraySize = 0;
 
