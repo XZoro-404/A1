@@ -2,10 +2,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-int * getChildren(int parent) {
-
+int * getChildren(int parent, int * number) {
+    int child = 0; // the Pid(s) for the children in the file
     char parentNum[20] = ""; // the int that gets passed in
-    char filePath[100] = ""; // the string for the file path
+    char filePath[50] = ""; // the string for the file path
+    int arraySize = 0; // an array to hold the children Pid(s)
+
     // Below we are changing the parent int to a string and creating the file path string
     sprintf(parentNum, "%d", parent);
     strcat(filePath, "/proc/");
@@ -14,29 +16,36 @@ int * getChildren(int parent) {
     strcat(filePath, parentNum);
     strcat(filePath, "/children");
 
-//    printf("Here is the file location: %s", filePath); // you can uncomment this to debug the filepath
     FILE *in_file = fopen(filePath, "r"); // read only
-    int number; // this is the numbers in the children file
-    int arraySize = 0;
 
     // test for files not existing.
     if (in_file == NULL) {
         printf("Error! Could not open file\n");
         exit(-1); // must include stdlib.h
     }
+
     // goes through the file and gets the numbers while counting the amount of ints in the file
-    while (fscanf(in_file, "%d", &number ) == 1)
+    while (fscanf(in_file, "%d", &child ) == 1)
     {
-        arraySize++;
-        printf("number: %d\n", number);
+        number[arraySize] = child; // sets the child pid to an array
+        printf("\nNumbers: %d\n", number[arraySize]);
+        arraySize++; // increments the array size
     }
-    printf("final number: %d", arraySize);
-    fclose(in_file);
+    fclose(in_file); // closes the file
+    Data childern;
+    children.result = number;
+    children.length = arraySize;
+    return &children;
 }
 
 int main(int argc, char * argv[]){
 
-    int * example = getChildren(1);
+//    int * example = getChildren(1);
+    int userInput = 348;
+    int number[100];
+    getChildren(userInput, &number[0]);
+    printf("numbers: %d", number[0]);
+
 
 }
 
