@@ -8,13 +8,8 @@ int * getChildren(int parent, int * number) {
     char filePath[50] = ""; // the string for the file path
     int arraySize = 0; // an array to hold the children Pid(s)
 
-    // Below we are changing the parent int to a string and creating the file path string
-    sprintf(parentNum, "%d", parent);
-    strcat(filePath, "/proc/");
-    strcat(filePath, parentNum);
-    strcat(filePath, "/task/");
-    strcat(filePath, parentNum);
-    strcat(filePath, "/children");
+    // Below we are setting the file path to the provided parent Pid
+    sprintf(filePath, "/proc/%d/task/%d/children", parent, parent);
 
     FILE *in_file = fopen(filePath, "r"); // read only
 
@@ -41,7 +36,7 @@ int * getChildren(int parent, int * number) {
 int main(int argc, char * argv[]){
 
 //    int * example = getChildren(1);
-    int userInput = 348;
+    int userInput = 1;
     int number[100];
     getChildren(userInput, &number[0]);
     printf("numbers: %d", number[0]);
